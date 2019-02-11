@@ -1,2 +1,2 @@
 # CS411
-Group Repo
+Team 6 Repo
