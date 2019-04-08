@@ -1,0 +1,15 @@
+A document explaining why you chose the technology stack that you are demonstrating; 
+I’d like to know if you considered other stacks, and the process you used to choose the stack for the prototype.
+
+
+Technology Stack
+
+Client Side:
+HTML
+CSS
+Maybe Bootstrap
+
+Server Side:
+Web Framework : Flask
+Programming Language : Python 
+Database: 
