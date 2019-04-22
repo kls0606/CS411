@@ -1,15 +1,15 @@
-import urllib3
 import facebook
 import requests
+from fbchat import Client
+from fbchat.models import *
+client = Client('FoodFriendEmail','FoodFriendPassword')
 
-
-token = 'HERE!!!'
+token = '339457186920319|7XyqpNHlCSlzdCXFGxfEZLPyQU0'
 graph = facebook.GraphAPI(access_token=token, version = 3.1)
 users = 'https://graph.facebook.com/v3.1/app/accounts/test-users?access_token='+token
 users = requests.get(users)
 users = users.json()
 users_data=[]
-
 
 
 
@@ -32,4 +32,13 @@ for u in range(len(users['data'])):
     users_data.append(user)
 
 
-print(users_data)
+users = client.searchForUsers('YourFriend')
+#print('users:', users)
+user = users[0]
+user_id = user.uid
+print("User's ID: {}".format(user.uid))
+print("User's name: {}".format(user.name))
+print("User's profile picture url: {}".format(user.photo))
+print("User's main url: {}".format(user.url))
+client.send(Message(text='Hi! Lets eat!'), thread_id=user_id, thread_type=ThreadType.USER)
+client.logout()
