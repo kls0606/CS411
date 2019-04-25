@@ -4,6 +4,7 @@
     <h1>{{ current_user.name }}</h1>
     <h2>{{ current_user.location }}</h2>
     {% for meal in meals %}
-    <div><p>{{ meal.author.username }} {{ meal.body }} on {{ meal.timestamp }} </p></div>
+    <div><p>You {{ meal.body }} on {{ meal.timestamp }} </p></div>
     {% endfor %}
 {% endblock %}
+
