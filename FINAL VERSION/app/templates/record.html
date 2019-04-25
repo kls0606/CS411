@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% for i in index %}
+    <p>
+        <a href={{links[i]}}>{{ names[i]}}</a>
+    </p>
+    {% endfor %}
+{% endblock %}
