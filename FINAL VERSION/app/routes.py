@@ -2,8 +2,8 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, Fb_Register_Form, EatForm
-from app.models import User
+from app.forms import LoginForm, RegistrationForm, Fb_Register_Form, EatForm, InviteForm
+from app.models import User, Meal
 from requests_oauthlib import OAuth2Session
 from requests_oauthlib.compliance_fixes import facebook_compliance_fix
 import urllib3
@@ -14,20 +14,25 @@ from urllib.parse import quote
 from urllib.parse import urlencode
 import json
 import urllib
-
+import ast
 
 @app.route('/')
+
 @app.route('/index')
 @login_required
 def index():
-    meals = [
-        {
-            'author': {'username': 'John'},
-            'body': 'ate with you at Kaju',
-            'timestamp': 'April 23'
-        }
-    ]
+    database_meals = Meal.query.filter_by(user_id=current_user.id).all()
+    meals=[]
+    for meal in database_meals:
+        attributes=["body","timestamp"]
+        body= meal.body
+        timestamp= meal.timestamp
+        values=[body,timestamp]
+        m=dict(zip(attributes, values))
+        meals.append(m)
     return render_template('index.html', title='Home', meals=meals)
+
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -57,12 +62,12 @@ def register():
         return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data)
+        user = User(username=form.username.data, name=form.name.data, location=form.location.data, email=form.email.data)
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
-        login_user(user)
+        login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
@@ -89,7 +94,7 @@ def fb_register():
         db.session.add(user)
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
-        login_user(user)
+        login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
@@ -111,39 +116,43 @@ def eat():
 
 @app.route("/result/<term>/<location>",methods=['GET', 'POST'])
 def result(term,location):
-    print(term)
-    print(location)
-    url_params = {'term': term,'location': location,'limit': 50,'offset': 0}
-    restos=yelp_call(API_HOST, SEARCH_PATH, API_KEY, url_params=url_params).get('businesses')
-    names=[]
-    links=[]
-    for r in restos:
-        name= r['name']
-        names.append(name)
-        link=r['url']
-        links.append(link)
-    iterator=[i for i in range(len(names))]
-    return render_template('record.html',names=names, links=links, index=iterator)
+    if current_user.is_authenticated:
+        url_params = {'term': term,'location': location,'limit': 50,'offset': 0}
+        restos=yelp_call(API_HOST, SEARCH_PATH, API_KEY, url_params=url_params).get('businesses')
+        names=[]
+        links=[]
+        for r in restos:
+            name= r['name']
+            names.append(name)
+            link=r['url']
+            links.append(link)
+        iterator=[i for i in range(len(names))]
+        user=current_user
+        friends_id=ast.literal_eval(user.friends)
+        friends=[User.query.filter_by(id=friend_id).first() for friend_id in friends_id]
+        form=InviteForm()
+        form.friends.choices = [(i,friends[i].name) for i in range(len(friends))]
+        form.food.choices =[(i,names[i]) for i in range(len(names))]
+        if form.validate_on_submit():
+            name= friends[form.friends.data].name
+            chosen_food =names[form.food.data]
+            message= "invited " + name+ " to eat at " + chosen_food
+            post = Meal(body= message, author=user)
+            db.session.add(post)
+            db.session.commit()
+            flash('Invite sent')
+            return redirect('/index')
+        return render_template('record.html',names=names, links=links, index=iterator, form= form)
+    else:
+        return redirect(url_for('index'))
 
 
-
-
+#Yelp API call
 API_KEY= ""
 API_HOST = 'https://api.yelp.com'
 SEARCH_PATH = '/v3/businesses/search'
 
 def yelp_call(host, path, api_key, url_params=None):
-    """Given your API_KEY, send a GET request to the API.
-    Args:
-        host (str): The domain host of the API.
-        path (str): The path of the API after the domain.
-        API_KEY (str): Your API Key.
-        url_params (dict): An optional set of query parameters in the request.
-    Returns:
-        dict: The JSON response from the request.
-    Raises:
-        HTTPError: An error occurs from the HTTP request.
-    """
     url_params = url_params or {}
     url = '{0}{1}'.format(host, quote(path.encode('utf8')))
     headers = {
@@ -204,3 +213,5 @@ def extract(user_email):
             user=dict(zip(attributes, values))
             print(user)
     return user
+
+
