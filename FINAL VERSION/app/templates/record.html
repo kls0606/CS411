@@ -1,6 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
+	<form method="POST">
+    {{ form.csrf_token }}
+    {% if form.errors %}
+    {{ form.errors }}
+    {% endif %}
+    {{form.friends.label}}{{form.friends}}
+    {{form.food.label}}{{form.food}}
+    {{form.submit.label}}{{form.submit()}}
+</form>
     {% for i in index %}
     <p>
         <a href={{links[i]}}>{{ names[i]}}</a>
