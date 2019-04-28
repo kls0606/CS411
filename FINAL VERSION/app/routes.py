@@ -134,11 +134,15 @@ def result(term,location):
         form.friends.choices = [(i,friends[i].name) for i in range(len(friends))]
         form.food.choices =[(i,names[i]) for i in range(len(names))]
         if form.validate_on_submit():
-            name= friends[form.friends.data].name
-            chosen_food =names[form.food.data]
-            message= "invited " + name+ " to eat at " + chosen_food
-            post = Meal(body= message, author=user)
-            db.session.add(post)
+            invited_name= friends[form.friends.data].name
+            invited= friends[form.friends.data]
+            chosen_restaurant =names[form.food.data]
+            invite_message= "You invited " + invited_name+ " to eat at " + chosen_restaurant
+            invited_message = user.name + " invited you to eat at " + chosen_restaurant
+            invite = Meal(body= invite_message, author=user)
+            invited = Meal(body= invited_message, author=invited)           
+            db.session.add(invite)
+            db.session.add(invite)
             db.session.commit()
             flash('Invite sent')
             return redirect('/index')
@@ -213,5 +217,10 @@ def extract(user_email):
             user=dict(zip(attributes, values))
             print(user)
     return user
+
+
+
+
+
 
 
