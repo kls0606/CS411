@@ -24,13 +24,13 @@ python3 -m venv environment
 
 Activate virtual environment
 
-```python
+```bash
 source environment/bin/activate
 ```
 
 Install necessary packages in the environment
 
-```python
+```bash
 (environment) $ pip install flask
 (environment) $ pip install flask-wtf
 (environment) $ pip install flask-sqlalchemy
