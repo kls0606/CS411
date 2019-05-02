@@ -1,0 +1,15 @@
+Team 6 A3 CS411 
+
+Jennie Nguyen         jennien@bu.edu
+Vivian Gunawan        vgunawan@bu.edu
+Li Sheng Ko (Sam)     kls0606@bu.edu
+Jing Xiao             xjing@bu.edu
+Yahui Chang (Molly)   mollyhui@bu.edu
+
+User Stories.txt
+_____________________________
+
+As a college student in Boston, I want to connect my Facebook profile to see if any of my mutual friends are also on the app and eat with friends that have similar food interests as me. I want to be able to search for a restaurant for a certain city that I am in at the time, and a certain type of food. I also want to be shown a list of restaurants that match my search. Then I want to be able to invite one of my facebook friends to eat with me at that restaurant.
+
+
+I am looking for a friend to go rock-climbing with. I want to search for places in Boston that I can go rock-climbing with. Then I want to send an invite to multiple people from my friends list and invite them to go rock climbing with me.

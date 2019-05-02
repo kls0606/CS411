@@ -1,0 +1,11 @@
+Group 6 A3: Vivian Gunawan, Li Sheng Ko, Jing Xiao, Jennie Nguyen, Yahui Chang
+
+Github Repo: https://github.com/s81680606/CS411
+
+Idea 1: Our first idea is to create an app that will find you, other people, to eat with. Uses Facebook live location to find nearby friends and then matches you two to a restaurant.
+ (https://developers.facebook.com/docs/graph-api) 
+	The Yelp Fusion API (https://www.yelp.com/developers/documentation/v3/authentication)
+	It satisfies one of the requirements of API usage (requirement 2) and third-party authentication (requirement 3)
+
+Idea 2: Health Tracker app. Will be able to insert food items and keep track of calories. Track your weight using Fitbit. https://www.programmableweb.com/api/fitbit. MyFitnessPal to find food items to keep track of calories. https://www.programmableweb.com/api/myfitnesspal
+
