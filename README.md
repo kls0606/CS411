@@ -3,10 +3,15 @@
 Team 6 Section A3 Repo
 
 Jennie Nguyen         jennien@bu.edu
+
 Vivian Gunawan        vgunawan@bu.edu
+
 Li Sheng Ko (Sam)     kls0606@bu.edu
+
 Jing Xiao             xjing@bu.edu
+
 Yahui Chang (Molly)   mollyhui@bu.edu
+
 
 # Food Friends
 
