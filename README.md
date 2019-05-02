@@ -42,30 +42,30 @@ Install necessary packages in the environment
 
 Initiate the app
 
-```python
+```bash
 (environment) $ export FLASK_APP=foodfriends.py
 ```
 
 Working the database
 
-```python
+```bash
 (environment) $ flask db init
 ```
 
 Generate migration script
 
-```python
+```bash
 (environment) $ flask db migrate -m "users table"
 (environment) $ flask db migrate -m "meals table"
 ```
 Apply changes to database
 
-```python
+```bash
 (environment) $ flask db upgrade
 ```
 Now you are ready to run!
 
-```python
+```bash
 (environment) $ flask run
 ```
 You should be able to open the app at 
