@@ -6,11 +6,11 @@ Jennie Nguyen         jennien@bu.edu
 
 Vivian Gunawan        vgunawan@bu.edu
 
-Li Sheng Ko (Sam)     kls0606@bu.edu
+Li Sheng Ko      kls0606@bu.edu
 
 Jing Xiao             xjing@bu.edu
 
-Yahui Chang (Molly)   mollyhui@bu.edu
+Yahui Chang    mollyhui@bu.edu
 
 
 # Food Friends
